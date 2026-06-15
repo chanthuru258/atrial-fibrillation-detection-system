@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrial Fibrillation Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1a237e;
+            font-weight: bold;
+        }
+        .result-normal {
+            background-color: #d4edda;
+            color: #155724;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        .result-abnormal {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">❤️ Atrial Fibrillation Detection</h2>
+            <p class="text-center text-muted">Upload a .npy ECG signal file to detect Atrial Fibrillation</p>
+
+            <form enctype="multipart/form-data" method="post" action="/">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="fileInput" class="form-label fw-bold">Upload .npy File</label>
+                    <input class="form-control" type="file" id="fileInput" name="file" accept=".npy" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">🔍 Analyze ECG</button>
+                </div>
+            </form>
+
+            {% if prediction %}
+            <div class="mt-4">
+                <h5 class="fw-bold">Detection Result:</h5>
+                {% if prediction == "Normal" %}
+                    <div class="result-normal text-center">✅ Result: {{ prediction }} - No Atrial Fibrillation Detected</div>
+                {% else %}
+                    <div class="result-abnormal text-center">⚠️ Result: {{ prediction }} - Atrial Fibrillation Detected</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if plot_path %}
+            <div class="text-center mt-4">
+                <h5 class="fw-bold">ECG Signal Graph:</h5>
+                <img src="{{ plot_path }}" alt="ECG Signal" class="img-fluid rounded border">
+            </div>
+            {% endif %}
+        </div>
+
+        <p class="text-center text-muted mt-3">
+            SBM College of Engineering & Technology, Dindigul | Anna University, Chennai
+        </p>
+    </div>
+</body>
+</html>

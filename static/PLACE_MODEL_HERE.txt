@@ -1,0 +1,5 @@
+இந்த folder-ல உங்கள் trained CNN model file வையுங்க:
+
+File name: cnn_model_from_train_dataset.h5
+
+Note: .h5 file பெரிசா இருந்தா Git LFS use பண்ணுங்க.
